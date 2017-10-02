@@ -36,6 +36,7 @@ import android.view.View
 import android.widget.Checkable
 import android.widget.Toast
 import nl.renedegroot.android.adbawake.Application
+import nl.renedegroot.android.adbawake.R
 import nl.renedegroot.android.adbawake.about.AboutFragment
 import nl.renedegroot.android.adbawake.businessmodel.LockControl
 import nl.renedegroot.android.adbawake.businessmodel.Preferences
@@ -89,7 +90,7 @@ class ConfigurationPresenter(val model: ConfigurationViewModel) : LockControl.On
             if (view is Checkable) {
                 view.isChecked = false
             }
-            Toast.makeText(view.context, "Please grant permission first", Toast.LENGTH_SHORT).show()
+            Toast.makeText(view.context, view.context.getString(R.string.grant_permission_toast), Toast.LENGTH_SHORT).show()
         }
     }
 
