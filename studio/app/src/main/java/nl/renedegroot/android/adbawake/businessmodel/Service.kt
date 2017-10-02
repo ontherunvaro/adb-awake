@@ -35,6 +35,9 @@ import javax.inject.Inject
 
 class Service : NotificationListenerService() {
 
+
+    private val ADB_NOTIFICATION_TEXT_ID = "adb_active_notification_title"
+
     @Inject
     lateinit var lockControl: LockControl
 
@@ -74,11 +77,8 @@ class Service : NotificationListenerService() {
     }
 
     private fun matchesADBNotification(sbn: StatusBarNotification): Boolean {
-        val systemText = systemTextProvider.getSystemText("adb_active_notification_title")
+        val systemText = systemTextProvider.getSystemText(ADB_NOTIFICATION_TEXT_ID)
 
-        return when (sbn.notification.tickerText) {
-            systemText, "USB debugging connected", "USB-foutopsporing verbonden" -> true
-            else -> false
-        }
+        return sbn.notification.tickerText == systemText
     }
 }
