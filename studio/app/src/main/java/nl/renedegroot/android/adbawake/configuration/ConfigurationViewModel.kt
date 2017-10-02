@@ -28,8 +28,10 @@
 package nl.renedegroot.android.adbawake.configuration
 
 import android.databinding.ObservableBoolean
+import android.databinding.ObservableField
 
 class ConfigurationViewModel {
     val wakeLocked = ObservableBoolean(false)
     val serviceEnabled = ObservableBoolean(true)
+    val permissionGranted = ObservableField(false)
 }

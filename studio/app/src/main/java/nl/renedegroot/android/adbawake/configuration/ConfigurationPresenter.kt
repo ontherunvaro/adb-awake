@@ -27,15 +27,19 @@
  */
 package nl.renedegroot.android.adbawake.configuration
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.provider.Settings
 import android.support.v4.app.FragmentManager
 import android.view.View
 import android.widget.Checkable
+import android.widget.Toast
 import nl.renedegroot.android.adbawake.Application
 import nl.renedegroot.android.adbawake.about.AboutFragment
 import nl.renedegroot.android.adbawake.businessmodel.LockControl
 import nl.renedegroot.android.adbawake.businessmodel.Preferences
+import nl.renedegroot.android.adbawake.businessmodel.Service
 import javax.inject.Inject
 
 
@@ -57,6 +61,7 @@ class ConfigurationPresenter(val model: ConfigurationViewModel) : LockControl.On
         lockControl.addListener(this)
         model.serviceEnabled.set(preferences.isServiceEnabled(context))
         model.wakeLocked.set(lockControl.isAcquired)
+        model.permissionGranted.set(checkPermission(context))
     }
 
     fun stop() {
@@ -67,12 +72,25 @@ class ConfigurationPresenter(val model: ConfigurationViewModel) : LockControl.On
         view.context.startActivity(Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS))
     }
 
+    fun checkPermission(context: Context): Boolean {
+        val serviceComponentName = ComponentName(context, Service::class.java)
+        val enabledListeners = Settings.Secure.getString(context.contentResolver, "enabled_notification_listeners")
+        return enabledListeners.contains(serviceComponentName.flattenToString())
+    }
+
     fun enableService(view: View) {
-        var isChecked = false
-        if (view is Checkable) {
-            isChecked = view.isChecked
+        if (model.permissionGranted.get()) {
+            var isChecked = false
+            if (view is Checkable) {
+                isChecked = view.isChecked
+            }
+            preferences.enableService(view.context, isChecked)
+        } else {
+            if (view is Checkable) {
+                view.isChecked = false
+            }
+            Toast.makeText(view.context, "Please grant permission first", Toast.LENGTH_SHORT).show()
         }
-        preferences.enableService(view.context, isChecked)
     }
 
     fun enableLock(view: View) {
