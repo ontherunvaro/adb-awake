@@ -48,6 +48,6 @@ class Preferences {
     }
 
     fun isServiceEnabled(context: Context): Boolean {
-        return sharedPreferencesProvider.getSharedPreferences(context).getBoolean(SERVICE_FIELD, true)
+        return sharedPreferencesProvider.getSharedPreferences(context).getBoolean(SERVICE_FIELD, false)
     }
 }
