@@ -45,6 +45,8 @@ class ConfigurationActivity : AppCompatActivity() {
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.model = viewModel
         binding.presenter = presenter
+
+
     }
 
     override fun onStart() {
