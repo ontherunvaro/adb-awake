@@ -31,10 +31,6 @@
     <string name="grant_permission">Grant permission to read notifications</string>
     <string name="text_service_explained">Acquire/release wakelock on appear/disappear of ADB notification</string>
     <string name="text_lock_explained">Current wake lock state</string>
-    <string name="button_released">Released</string>
-    <string name="button_acquired">Acquired</string>
-    <string name="button_enabled">Enabled</string>
-    <string name="button_disabled">Disabled</string>
     <string name="service_name">ADB notification listener</string>
     <string name="about_version">Version %1$s (%2$s, build %3$d)</string>
     <string name="action_about">About</string>
