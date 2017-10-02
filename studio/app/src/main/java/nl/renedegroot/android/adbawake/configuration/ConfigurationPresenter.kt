@@ -34,6 +34,7 @@ import android.provider.Settings
 import android.support.v4.app.FragmentManager
 import android.view.View
 import android.widget.Checkable
+import android.widget.Toast
 import nl.renedegroot.android.adbawake.Application
 import nl.renedegroot.android.adbawake.about.AboutFragment
 import nl.renedegroot.android.adbawake.businessmodel.LockControl
@@ -78,11 +79,18 @@ class ConfigurationPresenter(val model: ConfigurationViewModel) : LockControl.On
     }
 
     fun enableService(view: View) {
-        var isChecked = false
-        if (view is Checkable) {
-            isChecked = view.isChecked
+        if (model.permissionGranted.get()) {
+            var isChecked = false
+            if (view is Checkable) {
+                isChecked = view.isChecked
+            }
+            preferences.enableService(view.context, isChecked)
+        } else {
+            if (view is Checkable) {
+                view.isChecked = false
+            }
+            Toast.makeText(view.context, "Please grant permission first", Toast.LENGTH_SHORT).show()
         }
-        preferences.enableService(view.context, isChecked)
     }
 
     fun enableLock(view: View) {
