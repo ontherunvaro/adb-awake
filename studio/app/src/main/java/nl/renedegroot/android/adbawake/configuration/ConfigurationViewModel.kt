@@ -31,5 +31,5 @@ import android.databinding.ObservableBoolean
 
 class ConfigurationViewModel {
     val wakeLocked = ObservableBoolean(false)
-    val serviceEnabled = ObservableBoolean(true)
+    val serviceEnabled = ObservableBoolean(false)
 }
